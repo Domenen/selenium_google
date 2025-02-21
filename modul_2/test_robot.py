@@ -11,7 +11,7 @@ try:
     browser = webdriver.Chrome()
     browser.get("https://suninjuly.github.io/math.html")
 
-    text_calc = browser.find_element(By.CSS_SELECTOR, "div.form-group span#input_value")
+    text_calc = browser.find_element(By.ID, "input_value")
     x = text_calc.text
     y = calc(x)
     print(y)
