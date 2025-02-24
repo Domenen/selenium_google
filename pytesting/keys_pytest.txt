@@ -1,0 +1,66 @@
+py.test test_sample.py --collect-only # собирает информацию о наборе тестов
+
+py.test test_sample.py -v # выводит подробные сообщения
+
+py.test -q test_sample.py # опустить вывод имени файла
+
+python -m pytest -q test_sample.py # вызов pytest через python
+
+py.test --markers # показывать доступные маркеры
+
+# Для того, чтобы создать маркер многократного использования.
+/*
+# content of pytest.ini
+[pytest]
+markers =
+ webtest: mark a test as a webtest.
+*/
+
+py.test -k "TestClass and not test_one"  # запускайте тесты только с именами, которые соответствуют "строковому выражению".
+
+py.test test_server.py::TestClass::test_method # запускайте только те тесты, которые соответствуют идентификатору узла
+
+py.test -x # остановитесь после первой неудачи
+
+py.test --maxfail=2 # остановитесь после двух сбоевpy.test --showlocals # показать локальные переменные в трассировках
+py.test -l # (короткий путь)
+
+py.test --tb=long # информативное форматирование трассировки по умолчанию
+py.test --tb=native # форматирование стандартной библиотеки Python
+py.test --tb=short # более короткий формат трассировки
+py.test --tb=line# только одна строка на сбой
+py.test --tb=no # без вывода трассировки
+
+py.test -x --pdb # перейти в PDB при первом сбое, затем завершить сеанс тестирования
+
+py.test --durations=10 # список 10 самых длительных тестов.
+
+py.test --maxfail=2 -rf #завершение после 2 сбоев, отчет о сбоях.
+
+py.test -n 4 # отправить тесты на несколько процессоров
+
+py.test -m slowest # запустить тесты с декоратором @pytest.mark.slowest или slowest = pytest.mark.slowest; @slowest
+
+py.test --traceconfig # узнайте, какие плагины py.test активны в вашей среде.
+
+py.test --instafail # если установлен pytest-instafail, мгновенно отображайте ошибки и сбои вместо того, чтобы ждать окончания набора тестов.
+
+# Тест с использованием параметризации
+/*
+ import pytest
+
+
+ @pytest.mark.parametrize(
+ ('n', 'expected'), [
+            (1, 2),
+            (2, 3),
+            (3, 4),
+            (4, 5),
+ pytest.mark.xfail((1, 0)),
+ pytest.mark.xfail(reason="some bug")((1, 0)),
+ pytest.mark.skipif('sys.version_info >= (3,0)')((10, 11)),
+        ]
+    )
+ def test_increment(n, expected):
+ assert n + 1 == expected
+*/
