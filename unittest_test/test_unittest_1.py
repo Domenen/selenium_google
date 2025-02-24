@@ -31,6 +31,7 @@ class TestLink(unittest.TestCase):
         )
         
     def test_link2(self):
+        # Тест специально провален, чтобы наглядно видеть как это выглядит
         browser = webdriver.Chrome()
         browser.get("http://suninjuly.github.io/registration2.html")
 
