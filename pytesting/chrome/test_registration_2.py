@@ -50,23 +50,18 @@ def collected_results():
     print(message_text)
     
 
-@pytest.fixture(scope="function")
-def browser():
-    logger.info("Запуск браузера для теста..")
-    chrome_options = Options()
-    chrome_options.add_argument("--ignore-certificate-errors")  # Игнорировать SSL-ошибки
-    chrome_options.add_argument("--allow-insecure-localhost")
-    chrome_options.add_argument("--enable-unsafe-swiftshader")
-    chrome_options.add_argument("--disable-extensions")  # Отключить расширения
-    chrome_options.add_argument("--disable-notifications")  # Отключить уведомления
-    chrome_options.add_argument("--disable-gpu")  # Отключить GPU (может ускорить запуск)
-    chrome_options.add_argument("--no-sandbox")  # Отключить песочницу
-    chrome_options.add_argument("--disable-dev-shm-usage")  # Уменьшить использование памяти
-    chrome_options.add_argument("--headless")   # Разрешить небезопасные локальные соединения
-    browser = webdriver.Chrome(options=chrome_options)
-    yield browser
-    logger.info("Завершение работы браузера..")
-    browser.quit()
+# @pytest.fixture(scope="function")
+# def browser():
+#     logger.info("Запуск браузера для теста..")
+#     chrome_options = Options()
+#     chrome_options.add_argument("--headless")
+#     chrome_options.add_argument("--disable-gpu")
+#     chrome_options.add_argument("--no-sandbox")
+#     chrome_options.add_argument("--disable-dev-shm-usage")
+#     browser = webdriver.Chrome(options=chrome_options)
+#     yield browser
+#     logger.info("Завершение работы браузера..")
+#     browser.quit()
 
 @pytest.mark.parametrize('site_link', links)
 def test_guest_should_see_login_link(browser,

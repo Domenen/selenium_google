@@ -1,6 +1,9 @@
-from selenium import webdriver
+from selenium.webdriver.common.by import By
 
-# инициализируем драйвер браузера. После этой команды вы должны увидеть новое открытое окно браузера
-driver = webdriver.Firefox()
 
-driver.get("https://stepik.org/lesson/25969/step/8")
+link = "http://selenium1py.pythonanywhere.com/"
+
+
+def test_guest_should_see_login_link(browser):
+    browser.get(link)
+    browser.find_element(By.CSS_SELECTOR, "#login_link")

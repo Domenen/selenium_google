@@ -2,4 +2,7 @@
 venv
 .pytest_cache
 __pycache__
+test_logs.log
 test_logs
+logs
+log
