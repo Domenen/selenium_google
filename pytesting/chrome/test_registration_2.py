@@ -15,7 +15,14 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 load_dotenv()
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("test_logs.log"),  # Логи будут записываться в файл test_logs.log
+        logging.StreamHandler()  # Логи также будут выводиться в консоль
+    ]
+)
 logger = logging.getLogger(__name__)
 
 LOGIN = os.getenv("LOGIN") or "login"
@@ -41,10 +48,11 @@ def collected_results():
     for result in results:
         message_text +=result
     print(message_text)
+    
 
 @pytest.fixture(scope="function")
 def browser():
-    print("\nstart browser for test..")
+    logger.info("Запуск браузера для теста..")
     chrome_options = Options()
     chrome_options.add_argument("--ignore-certificate-errors")  # Игнорировать SSL-ошибки
     chrome_options.add_argument("--allow-insecure-localhost")
@@ -57,13 +65,14 @@ def browser():
     chrome_options.add_argument("--headless")   # Разрешить небезопасные локальные соединения
     browser = webdriver.Chrome(options=chrome_options)
     yield browser
-    print("\nquit browser..")
+    logger.info("Завершение работы браузера..")
     browser.quit()
 
 @pytest.mark.parametrize('site_link', links)
 def test_guest_should_see_login_link(browser,
                                      site_link,
                                      collected_results):
+    logger.info(f"Тестирование страницы: {site_link}")
     link = f"{site_link}"
     browser.get(link)
 
@@ -139,3 +148,4 @@ def test_guest_should_see_login_link(browser,
     ))
     if answer_text.text != "Correct!":
         collected_results.append(answer_text.text)
+        logger.info(f"Результат: {answer_text.text}")
