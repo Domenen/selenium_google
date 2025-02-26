@@ -8,10 +8,6 @@ from selenium.webdriver.chrome.options import Options
 # для запуска с вебдрайвером firefox
 # pytest -s -v --browser_name=firefox test_parser.py
 
-
-import pytest
-from selenium import webdriver
-
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default=None,
                      help="Choose browser: chrome or firefox")
